@@ -2,6 +2,10 @@ package com.property_insurance.service;
 
 import java.util.Arrays;
 
+import com.property_insurance.service.MyUserGroupConfig;
+
+import org.kie.api.task.UserGroupCallback;
+import org.kie.internal.identity.IdentityProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,5 +59,11 @@ public class DefaultWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean(name = "userGroupCallback")
+    public UserGroupCallback userGroupCallback(IdentityProvider provider)
+    {
+        return new MyUserGroupConfig(provider);
     }
 }
